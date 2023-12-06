@@ -1,0 +1,59 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+
+#define MAX_ITERATIONS 1000
+#define EPSILON 1e-6
+
+double sinartisi(double a0, double a1, double a2, double a3, double a4, double a5, double x) {
+    return a0 + a1 * x + a2 * xx + a3 xxx + a4 * xxxx + a5 xxxxx;
+}
+
+double paragogos(double a1, double a2, double a3, double a4, double a5, double x) {
+    return a1 + 2 * a2 * x + 3 * a3 * xx + 4 a4 * xxx + 5 * a5 * xxxx;
+}
+
+double Newton_Rafson(double a0, double a1, double a2, double a3, double a4, double a5, double x0) {
+    double x = x0;
+    int epanalipseis;
+
+    for (epanalipseis = 0; epanalipseis < MAX_ITERATIONS; epanalipseis++) {
+        double f_x = sinartisi(a0, a1, a2, a3, a4, a5, x);
+        double df_x = paragogos(a1, a2, a3, a4, a5, x);
+
+        if (fabs(df_x) < EPSILON) {
+            printf("Ο παράγωγος είναι πολύ μικρός. Το πρόγραμμα τερματίζεται.\n");
+            exit(1);
+        }
+
+        x = x - f_x / df_x;
+
+        if (fabs(f_x) < EPSILON) {
+            // Σύγκλιση
+            return x;
+        }
+    }
+    printf("Δεν συγκλίνει εντός %d επαναλήψεων. Το πρόγραμμα τερματίζεται.\n", MAX_ITERATIONS);
+    exit(1);
+}
+
+int main(int argc, charargv[]) {
+    if (argc != 8) {
+        printf("Χρήση: %s a0 a1 a2 a3 a4 a5 x0\n", argv[0]);
+        return 1;
+    }
+
+    double a0 = strtod(argv[1], NULL);
+    double a1 = strtod(argv[2], NULL);
+    double a2 = strtod(argv[3], NULL);
+    double a3 = strtod(argv[4], NULL);
+    double a4 = strtod(argv[5], NULL);
+    double a5 = strtod(argv[6], NULL);
+    double x0 = strtod(argv[7], NULL);
+
+    double riza = Newton_Rafson(a0, a1, a2, a3, a4, a5, x0);
+
+    printf("%.2lf\n", riza);
+
+    return 0;
+} 
